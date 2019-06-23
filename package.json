@@ -1,23 +1,23 @@
 {
-  "name": "easystaticresourceserve",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "dependencies": {},
-  "devDependencies": {
-    "eslint": "^6.0.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cyx125/easyStaticResourceServe.git"
-  },
-  "author": "butaier",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cyx125/easyStaticResourceServe/issues"
-  },
-  "homepage": "https://github.com/cyx125/easyStaticResourceServe#readme"
+    "name": "easystaticresourceserve",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "dependencies": {},
+    "devDependencies": {
+        "eslint": "^6.0.0"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cyx125/easyStaticResourceServe.git"
+    },
+    "author": "butaier",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/cyx125/easyStaticResourceServe/issues"
+    },
+    "homepage": "https://github.com/cyx125/easyStaticResourceServe#readme"
 }
