@@ -9,7 +9,7 @@
 <body>
 {{#each files}}
 <div>
-    <a href="{{../dir}}/{{this}}">{{this}}</a>
+    <span>[{{this.mime}}]</span><a href="{{../dir}}/{{this.dir}}">{{this.dir}}</a>
 </div>
 {{/each}}
 </body>

@@ -1,15 +1,24 @@
 const Http = require('http');
 const Chalk = require('chalk');
 const Path = require('path');
-const Config = require('./common/config');
+const DefaultConfig = require('./common/config');
 const Router = require('./helper/router');
+const OpenUrl = require('./helper/openUrl');
 
-const Serve = Http.createServer((req, res)=>{
-    let filePath = Path.join(Config.root, req.url);
-    Router(req, res, filePath);
-    
-});
-Serve.listen(Config.port, ()=>{
-    const address = `http://${Config.hostname}:${Config.port}`;
-    console.info(`serve running in ${Chalk.green(address)}`);
-});
+class Serve {
+    constructor(config) {
+        this.config = Object.assign({}, DefaultConfig, config);
+    }
+    start() {
+        const Serve = Http.createServer((req, res)=>{
+            let filePath = Path.join(this.config.root, req.url);
+            Router(req, res, filePath, this.config);
+        });
+        Serve.listen(this.config.port, ()=>{
+            const address = `http://${this.config.hostname}:${this.config.port}`;
+            console.info(`serve running in ${Chalk.green(address)}`);
+            OpenUrl(address);
+        });
+    }
+}
+module.exports = Serve;

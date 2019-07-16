@@ -6,24 +6,35 @@ const Readdir = Promisify(Fs.readdir);
 const Handlebars = require('handlebars');
 const tplPath = Path.join(__dirname, '../templates/dir.tpl');
 const tplSource = Fs.readFileSync(tplPath);
-const Config = require('../common/config');
+const mine = require('./mine');
 const template = Handlebars.compile(tplSource.toString());
-module.exports = async function( req, res, filePath){
+const Compress = require('./compress');
+
+module.exports = async function( req, res, filePath, config) {
     try{
         /** 判断类型 */
         const Stats = await Stat(filePath);
         if(Stats.isFile()){
+            const mineType = mine(filePath);
             res.statusCode = 200;
-            res.setHeader('Content-type', 'text/plain');
-            Fs.createReadStream(filePath).pipe(res);
-        }else if(Stats.isDirectory()){
+            res.setHeader('Content-type', mineType);
+            let rs = Fs.createReadStream(filePath);
+            rs.setEncoding('UTF-8');
+            if(filePath.match(config.compress)) {
+                rs = Compress(rs, req, res);
+            }
+            rs.pipe(res);
+        }else if(Stats.isDirectory()) {
             /** 显示文件夹内容 */
             const files = await Readdir(filePath);
             res.statusCode = 200;
             res.setHeader('Content-type', 'text/html');
-            let dir = Path.relative(Config.root, filePath);
-            const data ={
-                files,
+            let dir = Path.relative(config.root, filePath);
+            const data = {
+                files: files.map(file => ({
+                    dir: file,
+                    mime: mine(file),
+                })),
                 dir: dir?`/${dir}`:'',
                 title: Path.basename(filePath),
             };
